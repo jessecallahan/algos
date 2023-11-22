@@ -1,6 +1,5 @@
 // set up data struct
 
-
 const airports = 'PHX BKK OKC JFK LAX MEX EZE HEL LOS LAP LIM'.split(' ');
 
 const routes = [
@@ -53,7 +52,7 @@ function bfs(start) {
 
                 if (destination === 'BKK') {
                     console.log(`BFS found Bangkok!`)
-                    return visited;
+                    return Array.from(visited);
                 }
 
                 if (!visited.has(destination)) {
@@ -71,27 +70,29 @@ function bfs(start) {
 
 // depth first
 function dfs(start, visited = new Set()) {
-    console.log('start', start);
+    let thing;
     visited.add(start);
-    console.log('visited', visited);
     const destinations = adjacencyList.get(start);
-    console.log('destinations', destinations);
     if (destinations) {
-        for (const destination of destinations) {
+        if (!thing) {
+            for (const destination of destinations) {
+                console.log(destination)
+                if (destination === 'BKK') {
+                    console.log(`DFS found Bangkok`)
+                    thing = [...visited];
+                    console.log(thing)
+                    return thing;
+                }
 
-            if (destination === 'BKK') {
-                console.log('visited1', visited);
-                console.log(`DFS found Bangkok`)
-                return visited;
+                console.log('how', destination)
+                if (!visited.has(destination)) {
+                    dfs(destination, visited);
+                }
+
             }
-
-            if (!visited.has(destination)) {
-                dfs(destination, visited);
-            }
-
         }
-    }
 
+    }
 }
 
 
